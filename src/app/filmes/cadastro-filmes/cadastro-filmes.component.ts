@@ -31,9 +31,9 @@ export class CadastroFilmesComponent implements OnInit {
     return this.cadastro.controls;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.cadastro = this.fb.group({
-      titulo: ['', Validators.required, Validators.minLength(2), Validators.minLength(256)],
+      titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(256)]],
       urlFoto: ['', [Validators.minLength(10)]],
       dataLancamento: ['', [Validators.required]],
       descricao: [''],
@@ -45,7 +45,7 @@ export class CadastroFilmesComponent implements OnInit {
 
   }
 
-  submit(): void {
+  salvar(): void {
     this.cadastro.markAllAsTouched();
     if (this.cadastro.invalid) {
       return;
@@ -56,7 +56,7 @@ export class CadastroFilmesComponent implements OnInit {
       filme.id = this.id;
       this.editar(filme);
     } else {
-      this.salvar(filme);
+      this.salvar();
     }
   }
 
@@ -89,7 +89,7 @@ export class CadastroFilmesComponent implements OnInit {
     } as Filme;
   }
 
-  private salvar(filme: Filme): void {
+ /* private salvar(filme: Filme): void {
     this.filmeService.salvar(filme).subscribe(() => {
         const config = {
           data: {
@@ -119,7 +119,7 @@ export class CadastroFilmesComponent implements OnInit {
         };
         this.dialog.open(AlertaComponent, config);
       });
-  }
+  }*/
 
   private editar(filme: Filme): void {
     this.filmeService.editar(filme).subscribe(() => {
